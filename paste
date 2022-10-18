@@ -1,0 +1,32 @@
+seq_file = []
+i=0
+cc=[]
+out_file = "10182"
+fout = open(out_file,'w')
+ffff=open("10182r1r2",'w')
+with open("1018", 'r') as input_fasta:
+    for line in input_fasta:
+        line = line.strip()
+        line2=line.split()
+        f1=line2[0]
+        f2=line2[1]
+        i=i+1
+        if len(f1)>51 and len(f2)>51:
+            ts=str(i)+"@"+f1+"@"+f2
+            print(ts, file=ffff)
+            f1=f1[0:51]
+            f2=f2[0:51]
+            print('%s%d%s%s' % (">", i, "_", f1), file=fout)
+            print('%s' % (f2), file=fout)
+input_fasta.close()
+fout.close()
+ffff.close()
+
+
+
+
+
+
+
+
+

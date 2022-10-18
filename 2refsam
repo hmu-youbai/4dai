@@ -1,0 +1,70 @@
+seq_file = []
+i=0
+cc=[]
+with open("GRCm39.genome.fa", 'r') as input_fasta:
+    for line in input_fasta:
+        line = line.strip()
+        if line[0] == '>':
+            print(line)
+            cc.append(i)
+        seq_file.append(line)
+        i = i + 1
+input_fasta.close()
+
+dd={}
+for i in range(len(cc)-1):
+    ss="".join(seq_file[cc[i]+1:cc[i + 1]])
+    pp=seq_file[cc[i]].split()
+    pp=pp[0]
+    print(pp)
+    dd[pp] = ss
+ss="".join(seq_file[(cc[len(cc)-1]+1):(len(seq_file)-1)])
+print(seq_file[cc[len(cc)-1]].split()[0])
+dd[seq_file[cc[len(cc)-1]].split()[0]]=ss
+
+
+
+def DNA_complement1(sequence):
+    # 构建互补字典
+    comp_dict = {
+        "A":"T",
+        "T":"A",
+        "G":"C",
+        "C":"G",
+        "a":"t",
+        "t":"a",
+        "g":"c",
+        "c":"g",
+        "u":"a"
+    }
+    #求互补序列
+    sequence_list = list(sequence)
+    sequence_list = [comp_dict[base] for base in sequence_list]
+    # s1 = sequence_list
+    # s1 = ''.join(sequence_list)
+    sequence_list.reverse()
+    string = ''.join(sequence_list)
+    return string
+    # return s1
+cc=[]
+cscs2 = "r1r2and150ref"
+fout = open(cscs2,'w')
+with open("CCC1018", 'r') as f1018:
+    for line in f1018:
+        line = line.strip()
+        line2=line.split()
+        if line2[5]=='51M':
+            if int(line2[1]) == 0:
+                ref=dd[">"+line2[2]][int(line2[3])-1:int(line2[3])+151]
+            else:
+                ref = dd[">" + line2[2]][int(line2[3]) - 101:int(line2[3]) + 50]
+                ref=DNA_complement1(ref)
+            tt=line2[0]+" "+line2[1]+" "+line2[2]+" "+line2[3]+" "+line2[9]+" "+ref
+            print(tt, file=fout)
+            cc.append(tt)
+f1018.close()
+fout.close()
+
+
+
+
